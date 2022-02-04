@@ -7,16 +7,22 @@
             <h4>Free flights to remote workers</h4> -->
         </div>
         <div class="nav-bar">
-            <ul class="d-flex">
-                <li class="flex-item active" >
-                    <a href="#section1">Section 1</a>
-                </li>
-                <li class="flex-item">
-                    <a href="#section2">Section 2</a>
-                </li>
-                <li class="flex-item">
-                    <a href="#section3">Section 3</a>
-                </li>
+            <ul class="d-flex" id="navbar">
+                <a href="#section1" class="flex-item active nav-item" v-on:click="active">
+                    <li>
+                        Section 1
+                    </li>
+                </a>
+                <a href="#section2" class="flex-item nav-item"  v-on:click="active">
+                    <li>
+                        Section 2
+                    </li>
+                </a>
+                <a href="#section3" class="flex-item nav-item"  v-on:click="active">
+                    <li>
+                        Section 3
+                    </li>
+                </a>
             </ul>
         </div>
         <div class="content">
@@ -128,8 +134,18 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 export default {
     data : () => ({
-        album: null
+        album: null,
+        counter:0
     }),
+    methods : {
+        active : function(e){
+            let nav = document.getElementsByClassName('nav-item')
+            for(let i=0 ; i < nav.length ; i++){
+                nav[i].classList.remove('active')
+            }
+            e.currentTarget.classList.add('active')
+        }
+    },
   created() {
     axios.get('https://jsonplaceholder.typicode.com/photos?albumId=1').then((result) => {
         this.album = result.data
@@ -174,7 +190,11 @@ export default {
         font-family: 'Ibarra Real Nova', serif;
         font-weight: 400;
     }
-  .nav-bar ul li a{
+    .nav-bar{
+        position: sticky;
+        top: 0;
+    }
+  .nav-bar ul a{
         text-decoration: none;
         color: #515151;
     }
@@ -183,6 +203,9 @@ export default {
         text-align: center;
         padding: 0;
         margin: 0;
+    }
+    .nav-bar ul li{
+        cursor: pointer;
     }
     .d-flex{
         display: flex;
