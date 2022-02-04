@@ -9,18 +9,18 @@
         <div class="nav-bar">
             <ul class="d-flex">
                 <li class="flex-item active" >
-                    <a href="#">Section 1</a>
+                    <a href="#section1">Section 1</a>
                 </li>
                 <li class="flex-item">
-                    <a href="#">Section 2</a>
+                    <a href="#section2">Section 2</a>
                 </li>
                 <li class="flex-item">
-                    <a href="#">Section 3</a>
+                    <a href="#section3">Section 3</a>
                 </li>
             </ul>
         </div>
         <div class="content">
-            <div class="first-section d-flex">
+            <div class="first-section d-flex" id="section1">
                 <div class="image">
                     <img src="../assets/section1.jpg">
                 </div>
@@ -55,15 +55,93 @@
                     
                 </div>
             </div>
+            <div class="second-section" id="section2">
+                <h1>Section 2</h1>
+                <div class="timeline">
+                    <ul>
+                        <li>
+                            <h3>1778</h3>               
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Placeat dolores tenetur est voluptatem enim? Provident recusandae 
+                                ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
+                            </p>
+                        </li>
+                        <li>
+                            <h3>1779</h3>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Placeat dolores tenetur est voluptatem enim? Provident recusandae 
+                                ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
+                            </p>
+                        </li>
+                        <li>
+                            <h3>1789</h3>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Placeat dolores tenetur est voluptatem enim? Provident recusandae 
+                                ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
+                            </p>
+                        </li>
+                        <li>
+                            <h3>1820</h3>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Placeat dolores tenetur est voluptatem enim? Provident recusandae 
+                                ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
+                            </p>
+                        </li>
+                        <li>
+                             <h3>1830</h3>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Placeat dolores tenetur est voluptatem enim? Provident recusandae 
+                                ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="third-section d-flex" id="section3">
+                <h1>Section 3</h1>
+                <ul id="example-1">
+                <li v-for="image in album" :key="image.id">
+                    <img v-bind:src='image.thumbnailUrl'>
+                </li>
+                </ul>
+
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
+export default {
+    data : () => ({
+        album: null
+    }),
+  created() {
+    axios.get('https://jsonplaceholder.typicode.com/photos?albumId=1').then((result) => {
+        this.album = result.data
+    })
+  }
+};
 </script>
 
 <style>
+    html {
+    scroll-behavior: smooth;
+    }
     .header img, .image img {
         width: 100%;
         height: auto;
@@ -109,6 +187,8 @@
     .d-flex{
         display: flex;
         flex-wrap: wrap;
+        /* border-bottom: 1px solid #c7c7c7; */
+        /* padding: 0 0 4rem 0; */
     }
     .flex-item {
   background-color: #fff;
@@ -124,7 +204,7 @@
     background: #f9f6f6;
     padding: 3rem;
 }
-.text h1{
+.text h1, .second-section h1, .third-section h1, .timeline ul li h3{
     font-family: 'Merriweather', serif;
 }
 .text{
@@ -138,8 +218,29 @@
     font-weight: 600;
     font-size: 10pt;
     padding: 0.5rem 2rem 1rem 0;
-
+} 
+.timeline{
+    border-left: 1px solid #d9d9d9;
+    padding: 0 0 0 0.9rem;
 }
+.timeline ul li svg{
+    color: #0a527b ;
+}
+.timeline ul{
+    padding: 0;
+    color: #b5b5b5;
+}
+.timeline ul li h3{
+    display: inline-block;
+    color: #0a527b;
+    cursor: pointer;
+    padding: 0 1rem 0 0;
+}
+.timeline ul li p{
+    color: #000;
+    display: none;
+}
+
 
 @media (max-width: 800px) {
   .flex-item, .text, .image {
