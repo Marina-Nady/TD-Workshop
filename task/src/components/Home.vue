@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" >
         <div class="header">
             <img src="../assets/header.jpg"/>
             <!-- <h1>What it's like to travel to Hawaii right now</h1>
@@ -8,17 +8,17 @@
         </div>
         <div class="nav-bar">
             <ul class="d-flex" id="navbar">
-                <a href="#section1" class="flex-item active nav-item" v-on:click="active">
+                <a href="#section1" class="flex-item active nav-item links" v-on:click="active">
                     <li>
                         Section 1
                     </li>
                 </a>
-                <a href="#section2" class="flex-item nav-item"  v-on:click="active">
+                <a href="#section2" class="flex-item nav-item links"  v-on:click="active">
                     <li>
                         Section 2
                     </li>
                 </a>
-                <a href="#section3" class="flex-item nav-item"  v-on:click="active">
+                <a href="#section3" class="flex-item nav-item links"  v-on:click="active">
                     <li>
                         Section 3
                     </li>
@@ -26,7 +26,7 @@
             </ul>
         </div>
         <div class="content">
-            <div class="first-section d-flex" id="section1">
+            <div class="first-section d-flex section" id="section1">
                 <div class="image">
                     <img src="../assets/section1.jpg">
                 </div>
@@ -61,50 +61,60 @@
                     
                 </div>
             </div>
-            <div class="second-section" id="section2">
+            <div class="second-section section" id="section2">
                 <h1>Section 2</h1>
                 <div class="timeline">
                     <ul>
-                        <li>
-                            <h3>1778</h3>               
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                            <p>
+                        <li v-on:click="showDetails">
+                            <i class="fas fa-circle bullet"></i>
+                            <i class="far fa-dot-circle bullet-dot"></i>
+                            <h3>1778</h3>   
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>            
+                            <p id="1778">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 Placeat dolores tenetur est voluptatem enim? Provident recusandae 
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li>
+                        <li v-on:click="showDetails">
+                            <i class="fas fa-circle bullet"></i>
+                            <i class="far fa-dot-circle bullet-dot"></i>
                             <h3>1779</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                            <p>
+                            <p id='1779'>
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 Placeat dolores tenetur est voluptatem enim? Provident recusandae 
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li>
+                        <li v-on:click="showDetails">
+                            <i class="fas fa-circle bullet"></i>
+                            <i class="far fa-dot-circle bullet-dot"></i>
                             <h3>1789</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                            <p>
+                            <p id='1789'>
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 Placeat dolores tenetur est voluptatem enim? Provident recusandae 
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li>
+                        <li v-on:click="showDetails">
+                            <i class="fas fa-circle bullet"></i>
+                            <i class="far fa-dot-circle bullet-dot"></i>
                             <h3>1820</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                            <p>
+                            <p id="1820">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 Placeat dolores tenetur est voluptatem enim? Provident recusandae 
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li>
+                        <li v-on:click="showDetails">
+                            <i class="fas fa-circle bullet"></i>
+                            <i class="far fa-dot-circle bullet-dot"></i>
                              <h3>1830</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                            <p>
+                            <p id='1830'>
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 Placeat dolores tenetur est voluptatem enim? Provident recusandae 
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
@@ -114,13 +124,16 @@
                 </div>
             </div>
 
-            <div class="third-section d-flex" id="section3">
+            <div class="third-section d-flex section" id="section3">
                 <h1>Section 3</h1>
-                <ul id="example-1">
+            <div  v-for="image in album" :key="image.id"> 
+                    <img v-bind:src='image.thumbnailUrl'>
+            </div>
+                <!-- <ul id="example-1">
                 <li v-for="image in album" :key="image.id">
                     <img v-bind:src='image.thumbnailUrl'>
                 </li>
-                </ul>
+                </ul> -->
 
             </div>
         </div>
@@ -134,8 +147,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 export default {
     data : () => ({
-        album: null,
-        counter:0
+        album: [],      
     }),
     methods : {
         active : function(e){
@@ -144,13 +156,50 @@ export default {
                 nav[i].classList.remove('active')
             }
             e.currentTarget.classList.add('active')
+        },
+        handleScroll : function(){
+            const links = document.querySelectorAll('.links');
+            const sections = document.querySelectorAll('.section');
+
+            let index = sections.length;
+
+            while (index > 0 && window.scrollY + 50 < sections[index-1].offsetTop) {
+                --index
+                links.forEach((link) => link.classList.remove('active'));
+                links[index].classList.add('active');
+
+            }
+        },
+        showDetails : function(e){
+            let year = e.target.innerText
+            let title = e.target
+            let details = document.getElementById(year).style
+            let bullet = e.currentTarget.firstChild
+            let bulletDot = bullet.nextElementSibling
+            if(details.display === 'block' ){
+                details.display = 'none'
+                title.style.fontSize = '16pt'
+                e.target.nextSibling.style.display = 'inline'
+                bullet.style.display = 'inline'
+                bulletDot.style.display = 'none'
+            }else{
+                details.display = 'block'
+                title.style.fontSize = '23pt'
+                e.target.nextSibling.style.display = 'none'
+                bullet.style.display = 'none'
+                bulletDot.style.display = 'inline'
+
+            }
+
         }
     },
   created() {
     axios.get('https://jsonplaceholder.typicode.com/photos?albumId=1').then((result) => {
         this.album = result.data
     })
-  }
+    window.addEventListener("scroll", this.handleScroll);
+
+  },
 };
 </script>
 
@@ -193,6 +242,7 @@ export default {
     .nav-bar{
         position: sticky;
         top: 0;
+        z-index: 9999;
     }
   .nav-bar ul a{
         text-decoration: none;
@@ -252,18 +302,39 @@ export default {
 .timeline ul{
     padding: 0;
     color: #b5b5b5;
+    list-style: none;
+}
+.timeline ul li{
+    position: relative;
 }
 .timeline ul li h3{
     display: inline-block;
     color: #0a527b;
     cursor: pointer;
     padding: 0 1rem 0 0;
+    font-size: 16pt;
+
 }
 .timeline ul li p{
     color: #000;
     display: none;
 }
+.bullet{
+    position: absolute;
+    top: 38%;
+    left: -1.5%;
+    color: #ddd !important;
+    font-size: 7pt;
+    display: inline;
+}
+.bullet-dot{
+    position: absolute;
+    top: 27%;
+    left: -1.9%;
+    display: none;
+    font-size: 14pt;
 
+}
 
 @media (max-width: 800px) {
   .flex-item, .text, .image {
@@ -280,6 +351,15 @@ export default {
 }
 table{
     border-spacing: 1rem;
+}
+.bullet{
+    top: 42%;
+    left: -6.5%;
+}
+.bullet-dot{
+    top: 18%;
+    left: -7.9%;
+
 }
 }
 
