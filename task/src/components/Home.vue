@@ -2,9 +2,8 @@
     <div class="container" >
         <div class="header">
             <img src="../assets/header.jpg"/>
-            <!-- <h1>What it's like to travel to Hawaii right now</h1>
-            <hr/>
-            <h4>Free flights to remote workers</h4> -->
+            <h1>What it's like to travel to Hawaii right now</h1>
+            <h4>Free flights to remote workers</h4>
         </div>
         <div class="nav-bar">
             <ul class="d-flex" id="navbar">
@@ -65,20 +64,18 @@
                 <h1>Section 2</h1>
                 <div class="timeline">
                     <ul>
-                        <li v-on:click="showDetails">
-                            <i class="fas fa-circle bullet"></i>
-                            <i class="far fa-dot-circle bullet-dot"></i>
-                            <h3>1778</h3>   
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>            
-                            <p id="1778">
+                        <li v-on:click="showDetails" class="circle">
+                            <h3 style="font-size:23pt" class="top-circle">
+                                1778
+                            </h3>   
+                            <i class="fa fa-arrow-right" aria-hidden="true" style="display:none"></i>            
+                            <p id="1778" style="display:block">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 Placeat dolores tenetur est voluptatem enim? Provident recusandae 
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li v-on:click="showDetails">
-                            <i class="fas fa-circle bullet"></i>
-                            <i class="far fa-dot-circle bullet-dot"></i>
+                        <li v-on:click="showDetails" class="circle-default">
                             <h3>1779</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                             <p id='1779'>
@@ -87,9 +84,7 @@
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li v-on:click="showDetails">
-                            <i class="fas fa-circle bullet"></i>
-                            <i class="far fa-dot-circle bullet-dot"></i>
+                        <li v-on:click="showDetails" class="circle-default">
                             <h3>1789</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                             <p id='1789'>
@@ -98,9 +93,7 @@
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li v-on:click="showDetails">
-                            <i class="fas fa-circle bullet"></i>
-                            <i class="far fa-dot-circle bullet-dot"></i>
+                        <li v-on:click="showDetails"  class="circle-default">
                             <h3>1820</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                             <p id="1820">
@@ -109,9 +102,7 @@
                                 ipsa dolorem ad sit incidunt repellat magnam adipisci repudiandae a, unde quis minus ut?
                             </p>
                         </li>
-                        <li v-on:click="showDetails">
-                            <i class="fas fa-circle bullet"></i>
-                            <i class="far fa-dot-circle bullet-dot"></i>
+                        <li v-on:click="showDetails"  class="circle-default">
                              <h3>1830</h3>
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                             <p id='1830'>
@@ -124,31 +115,45 @@
                 </div>
             </div>
 
-            <div class="third-section d-flex section" id="section3">
+            <div class="third-section section" id="section3">
                 <h1>Section 3</h1>
-            <div  v-for="image in album" :key="image.id"> 
-                    <img v-bind:src='image.thumbnailUrl'>
-            </div>
-                <!-- <ul id="example-1">
-                <li v-for="image in album" :key="image.id">
-                    <img v-bind:src='image.thumbnailUrl'>
-                </li>
-                </ul> -->
+                <Carousel/>
 
             </div>
+
+        </div>
+        <div class="footer">
+            <p>All rights reserved.Copyright © 2021</p>
+            <ul>
+                <li>
+                    <a href="#">Sitemap</a>
+                </li>
+                <li>
+                    <a href="#">Terms and conditions</a>
+                </li>
+                <li>
+                    <a href="#">Privacy</a>
+                </li>
+                <li>
+                    <a href="#">Help</a>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 
 <script>
-import axios from "axios";
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+import Carousel from "./Carousel";
 
 export default {
     data : () => ({
         album: [],      
     }),
+    components: {
+		Carousel
+	},
     methods : {
         active : function(e){
             let nav = document.getElementsByClassName('nav-item')
@@ -174,29 +179,28 @@ export default {
             let year = e.target.innerText
             let title = e.target
             let details = document.getElementById(year).style
-            let bullet = e.currentTarget.firstChild
-            let bulletDot = bullet.nextElementSibling
+            let li = e.currentTarget
+            console.log(e.currentTarget)
             if(details.display === 'block' ){
                 details.display = 'none'
                 title.style.fontSize = '16pt'
                 e.target.nextSibling.style.display = 'inline'
-                bullet.style.display = 'inline'
-                bulletDot.style.display = 'none'
+                li.classList.remove('circle')
+                title.classList.remove('top-circle')
+                li.classList.add('circle-default')
             }else{
                 details.display = 'block'
                 title.style.fontSize = '23pt'
                 e.target.nextSibling.style.display = 'none'
-                bullet.style.display = 'none'
-                bulletDot.style.display = 'inline'
+                li.classList.remove('circle-default')
+                li.classList.add('circle')
+                title.classList.add('top-circle')
 
             }
 
         }
     },
   created() {
-    axios.get('https://jsonplaceholder.typicode.com/photos?albumId=1').then((result) => {
-        this.album = result.data
-    })
     window.addEventListener("scroll", this.handleScroll);
 
   },
@@ -207,6 +211,7 @@ export default {
     html {
     scroll-behavior: smooth;
     }
+
     .header img, .image img {
         width: 100%;
         height: auto;
@@ -218,19 +223,14 @@ export default {
         position: absolute;
     }
     .header h1{
-        top: 15%;
+        top: 9%;
         left: 5%;
         color: #fff;
-        width: 19rem;
+        width: 20vw;
         font-family: 'Ibarra Real Nova', serif;
         font-weight: 400;
-        font-size: 28pt;
-    }
-    .header hr{
-        top: 70%;
-        left: 5%;
-        width: 15%;
-        color: #818181;
+        font-size: 3vw;
+        margin: 0;
     }
      .header h4{
         top: 70%;
@@ -238,6 +238,10 @@ export default {
         color: #fff;
         font-family: 'Ibarra Real Nova', serif;
         font-weight: 400;
+        font-size: 1.3vw;
+        padding: 1rem 0 0 0;
+        margin: 0;
+        border-top: 1px solid #e5e2e2;
     }
     .nav-bar{
         position: sticky;
@@ -264,11 +268,18 @@ export default {
         /* padding: 0 0 4rem 0; */
     }
     .flex-item {
-  background-color: #fff;
-  padding: 20px;
-  flex: 30%;
+    background-color: #fff;
+    padding: 20px;
+    flex: 30%;
+    }
+.first-section{
+    padding: 0 0 4rem 0;
 }
-
+.second-section{
+        padding: 1rem 0 2rem 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
 .active{
     border-bottom: 3px solid #2e297b;
     color: #2e297b;
@@ -299,6 +310,7 @@ export default {
 .timeline ul li svg{
     color: #0a527b ;
 }
+
 .timeline ul{
     padding: 0;
     color: #b5b5b5;
@@ -319,21 +331,70 @@ export default {
     color: #000;
     display: none;
 }
-.bullet{
-    position: absolute;
-    top: 38%;
-    left: -1.5%;
-    color: #ddd !important;
-    font-size: 7pt;
-    display: inline;
-}
-.bullet-dot{
-    position: absolute;
-    top: 27%;
-    left: -1.9%;
-    display: none;
-    font-size: 14pt;
 
+.circle::after {
+      content: '';
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: -24px;
+    background-color: #fff;
+    border: 1px solid #0a527b;
+    top: 38px;
+    border-radius: 50%;
+    z-index: 1;
+}
+.top-circle::after{
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    left: -18px;
+    background-color: #0a527b;
+    top: 44px;
+    border-radius: 50%;
+    z-index: 5;
+}
+.circle-default::after{
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    left: -19px;
+    background-color: #ddd;
+    top: 30px;
+    border-radius: 50%;
+    z-index: 5;
+}
+.third-section{
+    padding: 1rem 0;
+}
+.third-section h1{
+    text-align: center;
+}
+.footer{
+    background: #000;
+    color: #fff;
+    padding: 0 0.7rem;
+    display: flex;
+}
+.footer p {
+    display: inline-block;
+    width: 50%;
+    padding: 0 0 0 5rem;
+}
+.footer ul{
+    list-style: none;
+    display: inline-block;
+    width: 50%;
+}
+.footer ul li{
+    display: inline-block;
+    margin: 0 2rem;
+}
+.footer ul li a{
+    display: inline-block;
+    color: #fff;
 }
 
 @media (max-width: 800px) {
@@ -352,15 +413,30 @@ export default {
 table{
     border-spacing: 1rem;
 }
-.bullet{
-    top: 42%;
-    left: -6.5%;
-}
-.bullet-dot{
-    top: 18%;
-    left: -7.9%;
+ .header h4{
+        padding: 0.6rem 0 0 0;
 
+    }
+    .footer {
+    display: block;
 }
+.footer p {
+    padding: 0 0 0 1rem;
+    text-align: center;
+    width: 100%;
+}
+.footer ul {
+    list-style: none;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin-top: 0;
+}
+.footer ul li {
+    display: block;
+    margin: 0.5rem 0;
+}
+
 }
 
 </style>
