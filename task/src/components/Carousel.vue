@@ -41,7 +41,6 @@ export default {
     axios.get('https://jsonplaceholder.typicode.com/photos?albumId=1').then((result) => {
         this.album = result.data
     })
-	console.log('Swiper', Swiper);
 
   },
   mounted() {
