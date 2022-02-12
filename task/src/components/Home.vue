@@ -132,9 +132,10 @@ export default {
     .third-section h1{
         font-family: 'Merriweather', serif;
         text-align: center;
+        margin-bottom: 2rem;
     }
     .third-section{
-        padding: 1rem 0;
+        padding: 2rem 0 0 0;
     }
     @media (max-width: 800px) {
     .flex-item {

@@ -3,7 +3,7 @@
   <div class="timeline">
     <ul>
       <li>
-        <h3 v-on:click="showDetails" class="circle circle-default title">1778</h3>
+        <h3 v-on:click="showDetails" class="circle circle-default">1778</h3>
         <i class="fa fa-arrow-right hidden" aria-hidden="true"></i>
         <p id="1778" class="hidden visible">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
@@ -68,7 +68,6 @@ export default {
             let arrow = e.target.nextSibling
             details.classList.toggle('visible')
             arrow.classList.toggle('hidden')
-            title.classList.toggle('title')
             title.classList.toggle('circle')
         }
     },
@@ -99,12 +98,8 @@ export default {
     font-size: 16pt;
     margin: 0.5rem 0;
 }
-.title{
-    font-size: 23pt !important;
-}
 .timeline ul li p{
     color: #000;
-    /* display: none; */
 }
 .circle-default::before{
     content: '';
@@ -116,6 +111,9 @@ export default {
     top: 15px;
     border-radius: 50%;
     z-index: 5;
+}
+.circle{
+    font-size: 23pt !important;
 }
 .circle::before {
     content: '';
