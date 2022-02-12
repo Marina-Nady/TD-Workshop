@@ -71,7 +71,7 @@ export default {
 
             let index = sections.length;
 
-            while (index > 0 && window.scrollY < sections[index-1].offsetTop) {
+            while (index > 0 && window.scrollY < sections[index-1].offsetTop+150) {
                 --index
                 links.forEach((link) => link.classList.remove('active'));
                 links[index].classList.add('active');
