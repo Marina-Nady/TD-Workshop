@@ -12,7 +12,7 @@
     .header{
         position: relative;
         background-image: linear-gradient(to right, rgba(0, 0, 0, 0.726) , transparent), 
-        url(/img/header.65351efa.jpg);
+        url(../assets/header.jpg);
         background-size: cover;
         width: 100%;
         height: 15rem;
